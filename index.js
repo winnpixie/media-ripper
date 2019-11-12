@@ -53,7 +53,7 @@
 
             return postUrls;
         }
-        extractMedia() {
+        getMedia() {
             if (window.location.host.includes("instagram.com")) {
                 return this.getInstagramMedia();
             } else if (window.location.host.includes("twitter.com")) {
@@ -65,7 +65,7 @@
         }
     };
 
-    (new MediaExtractor()).extractMedia().forEach(url => {
+    (new MediaExtractor()).getMedia().forEach(url => {
         console.log(url);
         window.open(url, "_blank");
     });
