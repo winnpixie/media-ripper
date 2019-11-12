@@ -1,6 +1,6 @@
 (function () {
     class MediaExtractor {
-        extractInstagram() {
+        getInstagramMedia() {
             let postUrls = new Set();
 
             // Post data object depends on if you're logged in or not.
@@ -32,34 +32,34 @@
 
             return postUrls;
         }
-        extractTwitter() {
+        getTwitterMedia() {
             let postUrls = new Set();
 
             document.querySelectorAll("img[src*=\"format\"").forEach(elem => postUrls.add(elem.src.substring(0, elem.src.lastIndexOf("&name="))));
 
             return postUrls;
         }
-        extractVsco() {
+        getVscoMedia() {
             let postUrls = new Set();
 
             // Grab videos instead of thumbnails if videos exist
-            let video_url = document.querySelectorAll("meta[property=\"og:video\"");
-            if (video_url.length > 0) {
+            let videoUrl = document.querySelectorAll("meta[property=\"og:video\"");
+            if (videoUrl.length > 0) {
                 postUrls.add(document.querySelectorAll("meta[property=\"og:video\"")[0].content);
             } else {
-                let image_url = document.querySelectorAll("meta[property=\"og:image\"")[0].content;
-                postUrls.add(image_url.substring(0, image_url.lastIndexOf("?h=")));
+                let imageUrl = document.querySelectorAll("meta[property=\"og:image\"")[0].content;
+                postUrls.add(imageUrl.substring(0, imageUrl.lastIndexOf("?h=")));
             }
 
             return postUrls;
         }
         extractMedia() {
             if (window.location.host.includes("instagram.com")) {
-                return this.extractInstagram();
+                return this.getInstagramMedia();
             } else if (window.location.host.includes("twitter.com")) {
-                return this.extractTwitter();
+                return this.getTwitterMedia();
             } else if (window.location.host.includes("vsco.co")) {
-                return this.extractVsco();
+                return this.getVscoMedia();
             }
             return [];
         }
