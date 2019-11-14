@@ -32,6 +32,18 @@
 
             return postUrls;
         }
+        getInstagramStoryMedia() {
+            let postUrls = new Set();
+
+            let videos = document.querySelectorAll("video");
+            if (videos.length > 0) {
+                postUrls.add(videos[0].currentSrc);
+            } else {
+                postUrls.add(document.querySelectorAll("img")[1].src);
+            }
+
+            return postUrls;
+        }
         getTwitterMedia() {
             let postUrls = new Set();
 
@@ -55,7 +67,11 @@
         }
         getMedia() {
             if (window.location.host.includes("instagram.com")) {
-                return this.getInstagramMedia();
+                if (window.location.pathname.startsWith("/stories")) {
+                    return this.getInstagramStoryMedia();
+                } else {
+                    return this.getInstagramMedia();
+                }
             } else if (window.location.host.includes("twitter.com")) {
                 return this.getTwitterMedia();
             } else if (window.location.host.includes("vsco.co")) {
