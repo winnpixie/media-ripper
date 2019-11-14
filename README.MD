@@ -9,6 +9,10 @@ Extracts media from social platforms and opens them in new tabs.
 ## Use as a UserScript
 To run from a UserScript extension such as Tampermonkey or Greasemonkey, append the following to the script's headers
 ```javascript
+// @include *://*instagram.com/p/*
+// @include *://*instagram.com/stories/*
+// @include *://*twitter.com/*/status/*
+// @include *://*vsco.co/*/media/*
 // @require https://alerithe.github.com/MediaExtractor/index.js
 ```
 

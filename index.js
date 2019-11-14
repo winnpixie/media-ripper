@@ -37,6 +37,7 @@
 
             let videos = document.querySelectorAll("video");
             if (videos.length > 0) {
+                // Don't get why they dont just use src, but whatever
                 postUrls.add(videos[0].currentSrc);
             } else {
                 postUrls.add(document.querySelectorAll("img")[1].src);
