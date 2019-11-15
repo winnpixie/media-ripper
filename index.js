@@ -47,6 +47,14 @@
 
             return postUrls;
         }
+        getTikTokMedia() {
+            let postUrls = new Set();
+
+            // Do I really need to use a Set?
+            postUrls.add(document.querySelectorAll("video")[0].src);
+
+            return postUrls;
+        }
         getTwitterMedia() {
             let postUrls = new Set();
 
@@ -75,6 +83,8 @@
                 } else if (window.location.pathname.startsWith('/p/')) {
                     return this.getInstagramMedia();
                 }
+            } else if (window.location.host.includes("tiktok.com")) {
+                return this.getTikTokMedia();
             } else if (window.location.host.includes('twitter.com')) {
                 return this.getTwitterMedia();
             } else if (window.location.host.includes('vsco.co')) {
