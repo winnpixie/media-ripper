@@ -35,25 +35,16 @@
             return postUrls;
         }
         getInstagramStoryMedia() {
-            let postUrls = new Set();
-
             let videos = document.querySelectorAll('video');
             if (videos.length > 0) {
-                // Don't get why they dont just use src, but whatever
-                postUrls.add(videos[0].currentSrc);
-            } else {
-                postUrls.add(document.querySelectorAll('img')[1].src);
+                // Why use currentSrc over src?
+                return [videos[0].currentSrc];
             }
-
-            return postUrls;
+            
+            return [document.querySelectorAll('img')[1].src];
         }
         getTikTokMedia() {
-            let postUrls = new Set();
-
-            // Do I really need to use a Set?
-            postUrls.add(document.querySelectorAll("video")[0].src);
-
-            return postUrls;
+            return [document.querySelectorAll('video')[0].src];
         }
         getTwitterMedia() {
             let postUrls = new Set();
@@ -63,33 +54,32 @@
             return postUrls;
         }
         getVscoMedia() {
-            let postUrls = new Set();
-
-            // Grab videos instead of thumbnails if videos exist
-            let videoUrl = document.querySelectorAll('meta[property="og:video"');
-            if (videoUrl.length > 0) {
-                postUrls.add(document.querySelectorAll('meta[property="og:video"')[0].content);
-            } else {
-                let imageUrl = document.querySelectorAll('meta[property="og:image"')[0].content;
-                postUrls.add(imageUrl.substring(0, imageUrl.lastIndexOf('?h=')));
+            let videos = document.querySelectorAll('meta[property="og:video"');
+            if (videos.length > 0) {
+                return [videos[0].content];
             }
-
-            return postUrls;
+            
+            let imageUrl = document.querySelectorAll('meta[property="og:image"')[0].content;
+            return [imageUrl.substring(0, imageUrl.lastIndexOf('?h='))];
         }
         getMedia() {
-            if (window.location.host.includes('instagram.com')) {
-                if (window.location.pathname.startsWith('/stories/')) {
+            let host = window.location.host;
+            let path = window.location.pathname;
+            
+            if (host.includes('instagram.com')) {
+                if (path.startsWith('/stories/')) {
                     return this.getInstagramStoryMedia();
-                } else if (window.location.pathname.startsWith('/p/')) {
+                } else if (path.startsWith('/p/')) {
                     return this.getInstagramMedia();
                 }
-            } else if (window.location.host.includes("tiktok.com")) {
+            } else if (host.includes("tiktok.com")) {
                 return this.getTikTokMedia();
-            } else if (window.location.host.includes('twitter.com')) {
+            } else if (host.includes('twitter.com')) {
                 return this.getTwitterMedia();
-            } else if (window.location.host.includes('vsco.co')) {
+            } else if (host.includes('vsco.co')) {
                 return this.getVscoMedia();
             }
+            
             return [];
         }
     };
