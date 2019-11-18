@@ -2,10 +2,10 @@
 Extracts media from social platforms and opens them in new tabs.
 
 ## Currently supported Platforms:
-* Instagram
-* TikTok
-* Twitter
-* VSCO
+* [Instagram](https://instagram.com/) (supports stories & posts)
+* [TikTok](https://tiktok.com/)
+* [Twitter](https://twitter.com/) (photos only)
+* [VSCO](https://vsco.co/)
 
 ## Use as a UserScript
 To run from a UserScript extension such as Tampermonkey or Greasemonkey, append the following to the script's headers
@@ -24,4 +24,4 @@ Save the following code block as a bookmark to run it from your Bookmarks toolba
 ```javascript
 javascript:(function(){var s=document.createElement("script");s.src="https://alerithe.github.io/MediaExtractor/index.js";document.head.appendChild(s);})();
 ```
-Note: This bookmarklet will not always work due to `Content Security Policies`. A more reliable URL is `javascript:` preceding a minified version of [`index.js`](https://github.com/MediaExtractor/index.js)
+Note: This bookmarklet will not always work due to `Content Security Policies`. A more reliable URL is `javascript:` preceding a minified version of [`index.js`](https://github.com/alerithe/MediaExtractor/blob/master/index.js)
