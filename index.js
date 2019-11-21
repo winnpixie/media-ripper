@@ -1,4 +1,4 @@
-(function () {
+(function (global) {
     'use strict';
 
     class MediaExtractor {
@@ -72,7 +72,7 @@
                 } else if (path.startsWith('/p/')) {
                     return this.getInstagramMedia();
                 }
-            } else if (host.includes("tiktok.com")) {
+            } else if (host.includes('tiktok.com')) {
                 return this.getTikTokMedia();
             } else if (host.includes('twitter.com')) {
                 return this.getTwitterMedia();
@@ -84,8 +84,8 @@
         }
     };
 
-    (window.MediaExtractor = new MediaExtractor()).getMedia().forEach(url => {
+    (global.MediaExtractor = new MediaExtractor()).getMedia().forEach(url => {
         console.log(url);
         window.open(url, '_blank');
     });
-})();
+})(window);
