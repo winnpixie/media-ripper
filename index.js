@@ -6,11 +6,11 @@
             let postUrls = new Set();
 
             // Post data object depends on if you're logged in or not.
-            let postData = window.__additionalData[window.location.pathname];
+            let postData = global.__additionalData[location.pathname];
             if (postData) {
-                postData = window.__additionalData[window.location.pathname].data.graphql.shortcode_media;
+                postData = global.__additionalData[location.pathname].data.graphql.shortcode_media;
             } else {
-                postData = window._sharedData.entry_data.PostPage[0].graphql.shortcode_media;
+                postData = global._sharedData.entry_data.PostPage[0].graphql.shortcode_media;
             }
 
             // Multi-media posts
@@ -63,8 +63,8 @@
             return [imageUrl.substring(0, imageUrl.lastIndexOf('?h='))];
         }
         getMedia() {
-            let host = window.location.host;
-            let path = window.location.pathname;
+            let host = location.host;
+            let path = location.pathname;
             
             if (host.includes('instagram.com')) {
                 if (path.startsWith('/stories/')) {
