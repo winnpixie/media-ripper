@@ -15,21 +15,20 @@
 
             // Multi-media posts
             if (postData.edge_sidecar_to_children) {
-                postData.edge_sidecar_to_children.edges.forEach(edge => {
-                    let node = edge.node;
+                postData.edge_sidecar_to_children.edges.map(edge => edge.node).forEach(node => {
                     if (node.video_url) {
                         postUrls.add(node.video_url);
                     } else {
                         postUrls.add(node.display_url);
                     }
                 });
-            }
-
-            // Single-media posts
-            if (postData.is_video) {
-                postUrls.add(postData.video_url);
             } else {
-                postUrls.add(postData.display_url);
+                // Single-media posts
+                if (postData.is_video) {
+                    return [postData.video_url];
+                } else {
+                    return [postData.display_url];
+                }
             }
 
             return postUrls;
@@ -40,7 +39,7 @@
                 // Why use currentSrc over src?
                 return [videos[0].currentSrc];
             }
-            
+
             return [document.querySelectorAll('img')[1].src];
         }
         getTikTokMedia() {
@@ -58,14 +57,14 @@
             if (videos.length > 0) {
                 return [videos[0].content];
             }
-            
+
             let imageUrl = document.querySelectorAll('meta[property="og:image"')[0].content;
             return [imageUrl.substring(0, imageUrl.lastIndexOf('?h='))];
         }
         getMedia() {
             let host = location.host;
             let path = location.pathname;
-            
+
             if (host.includes('instagram.com')) {
                 if (path.startsWith('/stories/')) {
                     return this.getInstagramStoryMedia();
@@ -79,7 +78,7 @@
             } else if (host.includes('vsco.co')) {
                 return this.getVscoMedia();
             }
-            
+
             return [];
         }
     };
