@@ -34,16 +34,15 @@
             return postUrls;
         }
         getInstagramStoryMedia() {
-            let videos = document.querySelectorAll('video');
+            let videos = document.getElementsByTagName('video');
             if (videos.length > 0) {
-                // Why use currentSrc over src?
                 return [videos[0].currentSrc];
             }
 
-            return [document.querySelectorAll('img')[1].src];
+            return [document.getElementsByTagName('img')[1].src];
         }
         getTikTokMedia() {
-            return [document.querySelectorAll('video')[0].src];
+            return [document.getElementsByTagName('video')[0].src];
         }
         getTwitterMedia() {
             let postUrls = new Set();
@@ -68,7 +67,7 @@
             if (host.includes('instagram.com')) {
                 if (path.startsWith('/stories/')) {
                     return this.getInstagramStoryMedia();
-                } else if (path.startsWith('/p/')) {
+                } else if (path.startsWith('/p/') || path.startsWith('/tv/')) {
                     return this.getInstagramMedia();
                 }
             } else if (host.includes('tiktok.com')) {
