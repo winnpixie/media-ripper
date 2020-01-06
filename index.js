@@ -1,4 +1,4 @@
-(function (global) {
+(function () {
     'use strict';
 
     class MediaExtractor {
@@ -6,11 +6,11 @@
             let postUrls = new Set();
 
             // Post data object depends on if you're logged in or not.
-            let postData = global.__additionalData[location.pathname];
+            let postData = window.__additionalData[location.pathname];
             if (postData) {
-                postData = global.__additionalData[location.pathname].data.graphql.shortcode_media;
+                postData = window.__additionalData[location.pathname].data.graphql.shortcode_media;
             } else {
-                postData = global._sharedData.entry_data.PostPage[0].graphql.shortcode_media;
+                postData = window._sharedData.entry_data.PostPage[0].graphql.shortcode_media;
             }
 
             // Multi-media posts
@@ -82,8 +82,8 @@
         }
     };
 
-    (global.MediaExtractor = new MediaExtractor()).getMedia().forEach(url => {
+    (window.MediaExtractor = new MediaExtractor()).getMedia().forEach(url => {
         console.log(url);
         window.open(url, '_blank');
     });
-})(window);
+})();
