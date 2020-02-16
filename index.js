@@ -6,11 +6,11 @@
             let postUrls = new Set();
 
             // Post data object depends on if you're logged in or not.
-            let postData = window.__additionalData[location.pathname];
+            let postData = __additionalData[location.pathname];
             if (postData) {
-                postData = window.__additionalData[location.pathname].data.graphql.shortcode_media;
+                postData = __additionalData[location.pathname].data.graphql.shortcode_media;
             } else {
-                postData = window._sharedData.entry_data.PostPage[0].graphql.shortcode_media;
+                postData = _sharedData.entry_data.PostPage[0].graphql.shortcode_media;
             }
 
             // Multi-media posts
@@ -47,7 +47,7 @@
         getTwitterMedia() {
             let postUrls = new Set();
 
-            document.querySelectorAll('img[src*="format"').forEach(elem => postUrls.add(elem.src.substring(0, elem.src.lastIndexOf('&name='))));
+            document.querySelectorAll('img[src*="format"').forEach(elem => postUrls.add(elem.src.substring(0, elem.src.lastIndexOf('&'))));
 
             return postUrls;
         }
@@ -58,7 +58,7 @@
             }
 
             let imageUrl = document.querySelectorAll('meta[property="og:image"')[0].content;
-            return [imageUrl.substring(0, imageUrl.lastIndexOf('?h='))];
+            return [imageUrl.substring(0, imageUrl.lastIndexOf('?'))];
         }
         getMedia() {
             let host = location.host;
