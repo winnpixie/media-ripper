@@ -5,16 +5,15 @@
         getInstagramMedia() {
             let postUrls = new Set();
 
-            // Post data object depends on if you're logged in or not.
-            let postData = __additionalData[location.pathname];
-            if (postData) {
+            // Post data object is different depending on if you're logged in or not.
+            let postData = null;
+            if (__additionalData[location.pathname]) {
                 postData = __additionalData[location.pathname].data.graphql.shortcode_media;
             } else {
                 postData = _sharedData.entry_data.PostPage[0].graphql.shortcode_media;
             }
 
-            // Multi-media posts
-            if (postData.edge_sidecar_to_children) {
+            if (postData.edge_sidecar_to_children) { // Multi-media post
                 postData.edge_sidecar_to_children.edges.map(edge => edge.node).forEach(node => {
                     if (node.video_url) {
                         postUrls.add(node.video_url);
@@ -22,13 +21,10 @@
                         postUrls.add(node.display_url);
                     }
                 });
-            } else {
-                // Single-media posts
-                if (postData.is_video) {
-                    return [postData.video_url];
-                } else {
-                    return [postData.display_url];
-                }
+            } else if (postData.is_video) { // Single-video post
+                return [postData.video_url];
+            } else { // Single-image post
+                return [postData.display_url];
             }
 
             return postUrls;
@@ -57,8 +53,8 @@
                 return [videos[0].content];
             }
 
-            let imageUrl = document.querySelectorAll('meta[property="og:image"')[0].content;
-            return [imageUrl.substring(0, imageUrl.lastIndexOf('?'))];
+            let image = document.querySelectorAll('meta[property="og:image"')[0].content;
+            return [image.substring(0, image.lastIndexOf('?'))];
         }
         getMedia() {
             let host = location.host;
