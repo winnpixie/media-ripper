@@ -17,8 +17,8 @@ To run from a UserScript extension such as Tampermonkey or Greasemonkey, append 
 // @include *://*tiktok.com/v/*
 // @include *://*twitter.com/*/status/*
 // @include *://*vsco.co/*/media/*
-// @require https://raw.githubusercontent.com/alerithe/MediaExtractor/master/index.js
 ```
+Make the UserScript source code the content of [`index.js`](https://github.com/alerithe/MediaExtractor/blob/master/index.js)
 
 ## Use as an executable Bookmark
 Save the following code block as a bookmark to run it from your Bookmarks toolbar
