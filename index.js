@@ -38,7 +38,7 @@
             return [document.getElementsByTagName('video')[0].src];
         }
         getTwitterMedia() {
-            return document.querySelectorAll('img[src*="format"]')
+            return Array.from(document.querySelectorAll('img[src*="format"]'))
                 .map(elem => elem.src.substring(0, elem.src.lastIndexOf('&')));
         }
         getVscoMedia() {
