@@ -31,6 +31,7 @@
                 return [videos[0].currentSrc];
             }
 
+            // When you're on mobile the index should be 0, weird.
             return [document.getElementsByTagName('img')[navigator.userAgent.includes("Mobile") ? 0 : 1].src];
         }
         getTikTokMedia() {
