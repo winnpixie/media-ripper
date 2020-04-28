@@ -3,31 +3,27 @@
 
     class MediaExtractor {
         getInstagramMedia() {
-            let postUrls = new Set();
-
-            // Post data object is different depending on if you're logged in or not.
-            let postData = null;
+            // Data object is different depending on if you're logged in or not.
+            let data = null;
             if (__additionalData[location.pathname]) {
-                postData = __additionalData[location.pathname].data.graphql.shortcode_media;
+                data = __additionalData[location.pathname].data.graphql.shortcode_media;
             } else {
-                postData = _sharedData.entry_data.PostPage[0].graphql.shortcode_media;
+                data = _sharedData.entry_data.PostPage[0].graphql.shortcode_media;
             }
 
-            if (postData.edge_sidecar_to_children) { // Multi-media post
-                postData.edge_sidecar_to_children.edges.map(edge => edge.node).forEach(node => {
-                    if (node.video_url) {
-                        postUrls.add(node.video_url);
-                    } else {
-                        postUrls.add(node.display_url);
-                    }
-                });
-            } else if (postData.is_video) { // Single-video post
-                return [postData.video_url];
-            } else { // Single-image post
-                return [postData.display_url];
+            if (data !== null) {
+                if (data.edge_sidecar_to_children) { // Multi-media post
+                    return data.edge_sidecar_to_children.edges
+                        .map(edge => edge.node.is_video ? edge.node.video_url : edge.node.display_url);
+                } else if (data.is_video) { // Single-video post
+                    return [data.video_url];
+                }
+
+                // Single-image post
+                return [data.display_url];
             }
 
-            return postUrls;
+            return [];
         }
         getInstagramStoryMedia() {
             let videos = document.getElementsByTagName('video');
@@ -35,25 +31,22 @@
                 return [videos[0].currentSrc];
             }
 
-            return [document.getElementsByTagName('img')[1].src];
+            return [document.getElementsByTagName('img')[navigator.userAgent.includes("Mobile") ? 0 : 1].src];
         }
         getTikTokMedia() {
             return [document.getElementsByTagName('video')[0].src];
         }
         getTwitterMedia() {
-            let postUrls = new Set();
-
-            document.querySelectorAll('img[src*="format"').forEach(elem => postUrls.add(elem.src.substring(0, elem.src.lastIndexOf('&'))));
-
-            return postUrls;
+            return document.querySelectorAll('img[src*="format"]')
+                .map(elem => elem.src.substring(0, elem.src.lastIndexOf('&')));
         }
         getVscoMedia() {
-            let videos = document.querySelectorAll('meta[property="og:video"');
+            let videos = document.querySelectorAll('meta[property="og:video"]');
             if (videos.length > 0) {
                 return [videos[0].content];
             }
 
-            let image = document.querySelectorAll('meta[property="og:image"')[0].content;
+            let image = document.querySelectorAll('meta[property="og:image"]')[0].content;
             return [image.substring(0, image.lastIndexOf('?'))];
         }
         getMedia() {
