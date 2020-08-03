@@ -1,4 +1,4 @@
-# SocialRip
+# socialrip
 Extracts media from social platforms and opens them in new tabs.
 
 ## Currently supported Platforms:
