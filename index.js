@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    class MediaExtractor {
+    class SocialRip {
         getInstagramMedia() {
             let dataObject = __additionalData[location.pathname];
             let post = dataObject != null ? dataObject.data.graphql.shortcode_media // Logged in
@@ -77,7 +77,7 @@
         }
     };
 
-    (window.MediaExtractor = new MediaExtractor()).getMedia().forEach(url => {
+    (window.SocialRip = new SocialRip()).getMedia().forEach(url => {
         console.log(url);
         window.open(url, '_blank');
     });
