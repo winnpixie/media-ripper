@@ -50,8 +50,8 @@
 
             // Instagram
             if (host.includes('instagram.com')) {
-                // Posts/IG-TV
-                if (path.startsWith('/p/') || path.startsWith('/tv/')) {
+                // Posts, IG-TV, and Reels
+                if (path.startsWith('/p/') || path.startsWith('/tv/') || path.startsWith('/reel/')) {
                     return this.getInstagramMedia();
                 }
                 // Stories
