@@ -13,6 +13,7 @@ To run from a UserScript extension such as Tampermonkey or Greasemonkey, append 
 // @include *://*instagram.com/p/*
 // @include *://*instagram.com/tv/*
 // @include *://*instagram.com/stories/*
+// @include *://*instagram.com/reel/*
 // @include *://*tiktok.com/*/video/*
 // @include *://*tiktok.com/v/*
 // @include *://*twitter.com/*/status/*
