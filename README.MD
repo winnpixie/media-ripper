@@ -2,7 +2,7 @@
 Extracts media from social platforms and opens them in new tabs.
 
 ## Currently supported Platforms:
-* [Instagram](https://instagram.com/) (posts, stories, and IGTV)
+* [Instagram](https://instagram.com/) (posts, stories, reels, and IGTV)
 * [TikTok](https://tiktok.com/)
 * [Twitter](https://twitter.com/) (photos only)
 * [VSCO](https://vsco.co/)
