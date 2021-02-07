@@ -1,5 +1,5 @@
 # socialrip
-Extracts media from social platforms and opens them in new tabs.
+Extracts media from social platforms and attempts to open them in new tabs.
 
 ## Currently supported Platforms:
 * [Instagram](https://instagram.com/) (posts, stories, reels, and IGTV)

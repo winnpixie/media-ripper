@@ -1,3 +1,8 @@
+/**
+ * SocialRip - Extracts media from various social platforms and attempts to open them in new tabs.
+ * Author: Summer (https://github.com/alerithe)
+ * Source: https://github.com/alerithe/socialrip/
+ */
 (function () {
     'use strict';
 
@@ -24,8 +29,9 @@
                 return [videos[0].currentSrc];
             }
 
-            // When on mobile the image index is 0 instead of 1 like on desktop, weird.
-            return [document.getElementsByTagName('img')[navigator.userAgent.includes('Mobile') ? 0 : 1].src];
+            // Just .src returns a square image
+            // I'm guessing .srcset contains multiple sizes for the post, not too sure though.
+            return document.getElementsByTagName('img')[0].srcset.split(' ')[0];
         }
         getTikTokMedia() { // NOTE: This returns a .htm file on mobile, external programs are needed for renaming.
             return [document.getElementsByTagName('video')[0].src];
@@ -33,7 +39,8 @@
         getTwitterMedia() { // NOTE: Videos require sniffing out XMLHttpRequest connections and external programs, undesirable solution.
             // NOTE: This will also return some images within replies.
             return Array.from(document.querySelectorAll('img[src*="format"]'))
-                .map(elem => elem.src.substring(0, elem.src.lastIndexOf('&')));
+                .map(elem => elem.src.substring(0, elem.src.lastIndexOf('&')
+                .filter(src => src.contains('/media/'))));
         }
         getVscoMedia() { // ez-pz reading <meta> tags.
             let video = document.querySelector('meta[property="og:video"]');
