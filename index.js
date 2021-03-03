@@ -37,10 +37,10 @@
             return [document.getElementsByTagName('video')[0].src];
         }
         getTwitterMedia() { // NOTE: Videos require sniffing out XMLHttpRequest connections and external programs, undesirable solution.
-            // NOTE: This will also return some images within replies.
+            // NOTE: This will also return some images within replies (possible fix: limit size to 4?).
             return Array.from(document.querySelectorAll('img[src*="format"]'))
-                .map(elem => elem.src.substring(0, elem.src.lastIndexOf('&')
-                .filter(src => src.contains('/media/'))));
+                .map(elem => elem.src.substring(0, elem.src.lastIndexOf('&')))
+                .filter(src => src.includes('/media/'));
         }
         getVscoMedia() { // ez-pz reading <meta> tags.
             let video = document.querySelector('meta[property="og:video"]');
