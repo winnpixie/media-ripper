@@ -29,20 +29,28 @@
                 return [videos[0].currentSrc];
             }
 
-            // Just .src returns a square image
-            // I'm guessing .srcset contains multiple sizes for the post, not too sure though.
-            return document.getElementsByTagName('img')[0].srcset.split(' ')[0];
+            let img = document.getElementsByTagName('img')[0];
+            if (img.srcset) {
+                // I'm guessing .srcset contains multiple sizes for the post, not too sure though.
+                return [document.getElementsByTagName('img')[0].srcset.split(' ')[0]];
+            }
+
+            // Returns a square image sometimes instead of the full picture. lolwut
+            return [img.src];
         }
-        getTikTokMedia() { // NOTE: This returns a .htm file on mobile, external programs are needed for renaming.
+        getInstagramProfilePicture() {
+            return [_sharedData.entry_data.ProfilePage[0].graphql.user.profile_pic_url_hd];
+        }
+        getTikTokMedia() { // (Possibly invalid) NOTE: This returns a .htm file on mobile, external programs are needed for renaming.
             return [document.getElementsByTagName('video')[0].src];
         }
         getTwitterMedia() { // NOTE: Videos require sniffing out XMLHttpRequest connections and external programs, undesirable solution.
-            // NOTE: This will also return some images within replies (possible fix: limit size to 4?).
+            // NOTE: This will also return some images within replies (fix: limit size to 4?).
             return Array.from(document.querySelectorAll('img[src*="format"]'))
                 .map(elem => elem.src.substring(0, elem.src.lastIndexOf('&')))
                 .filter(src => src.includes('/media/'));
         }
-        getVscoMedia() { // ez-pz reading <meta> tags.
+        getVscoMedia() { // Finally, an easy one.
             let video = document.querySelector('meta[property="og:video"]');
             if (video != null) {
                 return [video.content];
@@ -64,6 +72,10 @@
                 // Stories
                 if (path.startsWith('/stories/')) {
                     return this.getInstagramStoryMedia();
+                }
+                // Profile ?
+                if (path.startsWith('/') && path.length > 1) {
+                    return this.getInstagramProfilePicture();
                 }
             }
             // TikTok
