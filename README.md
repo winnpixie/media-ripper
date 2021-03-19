@@ -10,10 +10,7 @@ Extracts media from social platforms and attempts to open them in new tabs.
 ## Use as a UserScript
 To run from a UserScript extension such as Tampermonkey or Greasemonkey, append the following to the script's headers:
 ```javascript
-// @include *://*instagram.com/p/*
-// @include *://*instagram.com/tv/*
-// @include *://*instagram.com/stories/*
-// @include *://*instagram.com/reel/*
+// @include *://*instagram.com/*
 // @include *://*tiktok.com/*/video/*
 // @include *://*tiktok.com/v/*
 // @include *://*twitter.com/*/status/*

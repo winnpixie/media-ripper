@@ -31,7 +31,7 @@
 
             let img = document.getElementsByTagName('img')[0];
             if (img.srcset) {
-                // I'm guessing .srcset contains multiple sizes for the post, not too sure though.
+                // .srcset possibly contains multiple sizes for the post, not too sure though.
                 return [document.getElementsByTagName('img')[0].srcset.split(' ')[0]];
             }
 
@@ -45,12 +45,12 @@
             return [document.getElementsByTagName('video')[0].src];
         }
         getTwitterMedia() { // NOTE: Videos require sniffing out XMLHttpRequest connections and external programs, undesirable solution.
-            // NOTE: This will also return some images within replies (fix: limit size to 4?).
+            // NOTE: This will also return images within replies (fix: limit size to 4?).
             return Array.from(document.querySelectorAll('img[src*="format"]'))
                 .map(elem => elem.src.substring(0, elem.src.lastIndexOf('&')))
                 .filter(src => src.includes('/media/'));
         }
-        getVscoMedia() { // Finally, an easy one.
+        getVscoMedia() {
             let video = document.querySelector('meta[property="og:video"]');
             if (video != null) {
                 return [video.content];
