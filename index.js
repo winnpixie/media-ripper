@@ -1,4 +1,4 @@
-/**
+/*
  * SocialRip - Extracts media from various social platforms and attempts to open them in new tabs.
  * Author: Summer (https://github.com/alerithe)
  * Source: https://github.com/alerithe/socialrip/
