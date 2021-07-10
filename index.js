@@ -8,9 +8,38 @@
 
     class SocialRip {
         getInstagramMedia() {
-            let dataObject = __additionalData[location.pathname];
-            let post = dataObject != null ? dataObject.data.graphql.shortcode_media // Logged in
-                : _sharedData.entry_data.PostPage[0].graphql.shortcode_media; // Not logged in
+            let post = null;
+
+            try {
+                let dataObject = __additionalData[location.pathname];
+                post = dataObject != null ? dataObject.data.graphql.shortcode_media // Logged in
+                    : _sharedData.entry_data.PostPage[0].graphql.shortcode_media; // Not logged in
+            } catch (e) {
+                let dataObject = null;
+                
+                // Last-resort methods by scanning loaded scripts
+                let additionalDataSkip = `window.__additionalDataLoaded('${location.pathname}',`;
+                for (let docScr of document.scripts) {
+                    if (docScr.text.startsWith(additionalDataSkip)) {
+                        dataObject = JSON.parse(docScr.text.substring(additionalDataSkip.length, docScr.text.length - 2));
+                        post = dataObject.graphql.shortcode_media;
+
+                        break;
+                    }
+                }
+
+                if (dataObject == null) {
+                    let sharedDataSkip = 'window._sharedData = ';
+                    for (let docScr of document.scripts) {
+                        if (docScr.text.startsWith(sharedDataSkip)) {
+                            dataObject = JSON.parse(docScr.text.substring(sharedDataSkip.length, docScr.text.length - 2));
+                            post = dataObject.entry_data.PostPage[0].graphql.shortcode_media;
+
+                            break;
+                        }
+                    }
+                }
+            }
 
             if (post != null) {
                 if (post.edge_sidecar_to_children != null) { // Multi-media post
