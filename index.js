@@ -1,4 +1,4 @@
-/**
+/*
  * socialrip - Attempts to extract media from social platforms so you can save them.
  * Author: Summer (https://github.com/alerithe)
  * Source: https://github.com/alerithe/socialrip/
