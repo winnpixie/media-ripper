@@ -1,11 +1,11 @@
 # socialrip
-Extracts media from social platforms and attempts to open them in new tabs.
+Attempts to extract media from social platforms so you can save them.
 
 ## Currently supported Platforms:
-* [Instagram](https://instagram.com/) (posts, stories, reels, and IGTV)
+* [Instagram](https://instagram.com/) (posts (multi and single), stories, reels, and IGTV)
 * [TikTok](https://tiktok.com/)
 * [Twitter](https://twitter.com/) (photos only)
-* [VSCO](https://vsco.co/)
+* [VSCO](https://vsco.co/) (images and videos)
 
 ## Use as a UserScript
 To run from a UserScript extension such as Tampermonkey or Greasemonkey, append the following to the script's headers:
