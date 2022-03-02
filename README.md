@@ -8,15 +8,7 @@ Attempts to extract media from social platforms so you can save them.
 * [VSCO](https://vsco.co/) (images and videos)
 
 ## Use as a UserScript
-To run from a UserScript extension such as Tampermonkey or Greasemonkey, append the following to the script's headers:
-```javascript
-// @include *://*instagram.com/*
-// @include *://*tiktok.com/*/video/*
-// @include *://*tiktok.com/v/*
-// @include *://*twitter.com/*/status/*
-// @include *://*vsco.co/*/media/*
-```
-Make the script's source code the content of [index.js](index.js).
+To run from a UserScript extension such as Tampermonkey or Greasemonkey, install [socialrip.user.js](socialrip.user.js).
 
 ## Use as an executable Bookmark
 Save the following code block as a bookmark to run it from your Bookmarks toolbar
