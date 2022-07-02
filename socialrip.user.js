@@ -14,8 +14,8 @@
 
 /*
  * socialrip - Attempts to extract media from social platforms so you can save them.
- * Author: Hannah (https://github.com/tivuhh)
- * Source: https://github.com/tivuhh/socialrip/
+ * Author: Hannah (https://github.com/winnpixie)
+ * Source: https://github.com/winnpixie/socialrip/
  */
 (function () {
     'use strict';
