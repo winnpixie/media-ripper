@@ -1,20 +1,20 @@
 // ==UserScript==
 // @name         socialrip
 // @namespace    http://tampermonkey.net/
-// @version      0.1
-// @description  try to take over the world!
+// @version      1.0.0
+// @description  Extract media from social platforms so you can save them locally.
 // @author       Hannah
-// @include *://*instagram.com/*
-// @include *://*tiktok.com/*/video/*
-// @include *://*tiktok.com/v/*
-// @include *://*twitter.com/*/status/*
-// @include *://*vsco.co/*/media/*
+// @match        https://*.instagram.com/*
+// @match        https://*.tiktok.com/*/video/*
+// @match        https://*.tiktok.com/v/*
+// @match        https://*.twitter.com/*/status/*
+// @match        https://*.vsco.co/*/media/*
 // @grant        none
 // @run-at document-start
 // ==/UserScript==
 
 /*
- * socialrip - Attempts to extract media from social platforms so you can save them.
+ * socialrip - Extract media from social platforms so you can save them locally.
  * Author: Hannah (https://github.com/winnpixie)
  * Source: https://github.com/winnpixie/socialrip/
  */
