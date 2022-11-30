@@ -9,6 +9,7 @@
 // @match        https://*.tiktok.com/v/*
 // @match        https://*.twitter.com/*/status/*
 // @match        https://*.vsco.co/*/media/*
+// @match        https://*.weheartit.com/entry/*
 // @grant        none
 // @run-at document-start
 // ==/UserScript==
@@ -128,11 +129,16 @@
             return [image.substring(0, image.lastIndexOf('?'))];
         }
 
-        // Unsupported site or path? (or we are waiting for XHRs)
+        if (host.includes('weheartit.com')) {
+            // TODO: This seems to double as a watermark bypass, cool, I guess?
+            return [document.getElementsByClassName('entry-image')[0].src];
+        }
+
+        // Unsupported site or path? (or we are waiting for XHRs?)
         return [];
     };
 
-    const displayMedia = urls => {
+    const displayMedia = (urls) => {
         urls.forEach(url => {
             console.log(url);
             window.open(url, '_blank');

@@ -6,6 +6,7 @@ Attempts to extract media from social platforms so you can save them.
 * [TikTok](https://tiktok.com/)
 * [Twitter](https://twitter.com/) (photos only)
 * [VSCO](https://vsco.co/) (images and videos)
+* [WeHeartIt](https://weheartit.com/) (images and gifs)
 
 ## Use as a UserScript
 To run from a UserScript extension such as Tampermonkey or Greasemonkey, install [socialrip.user.js](socialrip.user.js).
