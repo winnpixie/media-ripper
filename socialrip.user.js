@@ -8,6 +8,7 @@
 // @match        https://*.tiktok.com/*/video/*
 // @match        https://*.tiktok.com/v/*
 // @match        https://*.twitter.com/*/status/*
+// @match        https://*.x.com/*/status/*
 // @match        https://*.vsco.co/*/media/*
 // @match        https://*.weheartit.com/entry/*
 // @grant        none
@@ -55,6 +56,7 @@
         }
     }
 
+    // FIXME: This is so far broken beyond repair, Meta changes their internal API at least 10 times a week and makes it near impossible to work with.
     class InstagramExtractor extends MediaExtractor {
         getPostMedia() { // Boilerplate for if I ever need to separate methods.
             this.getGenericMedia();
@@ -206,7 +208,7 @@
             }
         }
 
-        if (host.includes('twitter.com')) {
+        if (host.includes('twitter.com') || host.includes('x.com')) {
             extractor = new TwitterExtractor();
         }
 
