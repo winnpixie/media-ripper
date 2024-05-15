@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         socialrip
+// @name         media-ripper
 // @namespace    http://tampermonkey.net/
 // @version      1.2.0
 // @description  Extract media from social platforms so you can save them locally.
@@ -16,22 +16,40 @@
 // ==/UserScript==
 
 /*
- * socialrip - Extract media from social platforms so you can save them locally.
- * Author: Hannah (https://github.com/winnpixie)
- * Source: https://github.com/winnpixie/socialrip/
+ * media-ripper - Extract media from social platforms so you can save them locally.
+ * Author: Hannah ( https://github.com/winnpixie/ )
+ * Source: https://github.com/winnpixie/media-ripper/
  */
 (function () {
     'use strict';
 
     // BEGIN XHR eXtensions
-    window.XHRX = {
-        onCompleted: []
-    };
+    // BEGIN Event declarations
+    class XHREvent {
+        constructor(context) {
+            this.context = context;
 
+            this.cancelled = false;
+        }
+    }
+
+    class XHRFinishedEvent extends XHREvent {
+        constructor(context) {
+            super(context);
+        }
+    }
+    // END Event declarations
+
+    const XHRExt = {
+        finishHandlers: []
+    };
+    window.XHRExt = XHRExt;
+
+    // BEGIN Prototype hacking
     const xhr_open = XMLHttpRequest.prototype.open;
     XMLHttpRequest.prototype.open = function () {
         this.xUrl = arguments[1];
-
+        
         xhr_open.apply(this, arguments);
     };
 
@@ -40,7 +58,7 @@
         const xhr_onreadystatechange = this.onreadystatechange;
         this.onreadystatechange = function () {
             if (this.readyState === XMLHttpRequest.DONE) {
-                window.XHRX.onCompleted.forEach(action => action(this));
+                XHRExt.finishHandlers.forEach(handler => handler.call(null, new XHRFinishedEvent(this)));
             }
 
             if (xhr_onreadystatechange != null) xhr_onreadystatechange.apply(this, arguments);
@@ -48,6 +66,7 @@
 
         xhr_send.apply(this, arguments);
     };
+    // END Prototype hacking
     // END XHR eXtensions
 
     class MediaExtractor {
@@ -71,10 +90,11 @@
         }
 
         getGenericMedia() {
-            window.XHRX.onCompleted.push(xhr => {
-                if (!xhr.xUrl.endsWith('/api/graphql')) return;
+            window.XHRExt.finishHandlers.push(event => {
+                let ctx = event.context;
+                if (!ctx.xUrl.endsWith('/api/graphql')) return;
 
-                let json = JSON.parse(xhr.responseText);
+                let json = JSON.parse(ctx.responseText);
                 let data = json.data.xdt_api__v1__media__shortcode__web_info.items[0];
 
                 switch (data.media_type) {
@@ -102,9 +122,10 @@
         }
 
         getStoryMedia() {
-            window.XHRX.onCompleted.push(xhr => {
-                if (xhr.xUrl.includes('/story/') || xhr.xUrl.includes('/feed/reels_media/')) {
-                    let json = JSON.parse(xhr.responseText);
+            window.XHRExt.finishHandlers.push(event => {
+                let ctx = event.context;
+                if (ctx.xUrl.includes('/story/') || ctx.xUrl.includes('/feed/reels_media/')) {
+                    let json = JSON.parse(ctx.responseText);
 
                     let data = json.reel;
                     if (json.reels_media != null) data = json.reels_media[0];
@@ -122,10 +143,11 @@
         }
 
         getProfilePicture() {
-            window.XHRX.onCompleted.push(xhr => {
-                if (!xhr.xUrl.includes('/users/web_profile_info/')) return;
+            window.XHRExt.finishHandlers.push(event => {
+                let ctx = event.content;
+                if (!ctx.xUrl.includes('/users/web_profile_info/')) return;
 
-                let json = JSON.parse(xhr.responseText);
+                let json = JSON.parse(ctx.responseText);
                 displayMedia([json.data.user.profile_pic_url_hd]);
             });
         }
@@ -224,8 +246,6 @@
             extractor = new WeHeartItExtractor();
         }
 
-        if (extractor == null) return; // Unknown site?
-
-        displayMedia(extractor.extract());
+        if (extractor != null) displayMedia(extractor.extract());
     })();
 })();
