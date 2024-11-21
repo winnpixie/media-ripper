@@ -2,10 +2,10 @@
 Attempts to extract media from social platforms so you can save them.
 
 ## !! DISCLAIMER !!
-PROJECT ABANDONED.
+PROJECT (SEMI-)ABANDONED.
 
 ## Supported Platforms:
-* [Instagram](https://instagram.com/) (~~multi+single posts, stories,~~ reel video+audio, ~~IG-TV,~~ profile pictures)
+* [Instagram](https://instagram.com/) (multi+single media posts, stories, reel video+audio, IG-TV, and profile pictures)
 * [TikTok](https://tiktok.com/)
 * [Twitter](https://twitter.com/) (images only)
 * [VSCO](https://vsco.co/) (images and videos)
